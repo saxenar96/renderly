@@ -120,3 +120,8 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* Hide Next.js development indicator */
+#__next-build-watcher {
+  display: none !important;
+}

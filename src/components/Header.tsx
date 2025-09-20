@@ -55,15 +55,6 @@ export function Header() {
             </a>
           </nav>
 
-          {/* CTA Button */}
-          <div className="flex items-center space-x-4">
-            <button className="hidden sm:inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200">
-              Sign In
-            </button>
-            <button className="inline-flex items-center px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
-              Get Started
-            </button>
-          </div>
         </div>
       </div>
     </header>

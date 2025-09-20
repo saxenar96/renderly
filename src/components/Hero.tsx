@@ -48,21 +48,6 @@ export function Hero() {
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">50+</div>
-              <div className="text-gray-600">Coding Challenges</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">10k+</div>
-              <div className="text-gray-600">Developers Practiced</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-gray-900 mb-2">95%</div>
-              <div className="text-gray-600">Success Rate</div>
-            </div>
-          </div>
         </div>
       </div>
 
