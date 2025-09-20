@@ -1,11 +1,14 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { ChallengeCard } from './ChallengeCard';
 
 export function ChallengesSection() {
-  const handleStartChallenge = () => {
-    console.log("Starting challenge...");
+  const router = useRouter();
+
+  const handleStartChallenge = (challengeId: string) => {
+    router.push(`/challenges/${challengeId}`);
   };
 
   return (
@@ -25,6 +28,7 @@ export function ChallengesSection() {
         {/* Challenge Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           <ChallengeCard
+            id="create-reusable-button"
             title="Create a Reusable Button Component"
             difficulty="Easy"
             techStack="React"
@@ -35,6 +39,7 @@ export function ChallengesSection() {
           />
           
           <ChallengeCard
+            id="build-todo-list"
             title="Build a Todo List App"
             difficulty="Medium"
             techStack="React"
@@ -44,6 +49,7 @@ export function ChallengesSection() {
           />
           
           <ChallengeCard
+            id="create-data-table"
             title="Create a Data Table with Sorting"
             difficulty="Hard"
             techStack="TypeScript"
@@ -53,6 +59,7 @@ export function ChallengesSection() {
           />
 
           <ChallengeCard
+            id="build-modal-component"
             title="Build a Modal Component"
             difficulty="Easy"
             techStack="React"
@@ -62,6 +69,7 @@ export function ChallengesSection() {
           />
 
           <ChallengeCard
+            id="implement-infinite-scroll"
             title="Implement Infinite Scroll"
             difficulty="Medium"
             techStack="React"
@@ -71,6 +79,7 @@ export function ChallengesSection() {
           />
 
           <ChallengeCard
+            id="create-drag-drop-interface"
             title="Create a Drag & Drop Interface"
             difficulty="Hard"
             techStack="TypeScript"

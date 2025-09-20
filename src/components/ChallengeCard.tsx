@@ -7,13 +7,14 @@ import { Button } from './ui/button';
 import { cn } from '../lib/utils';
 
 export interface ChallengeCardProps {
+  id: string;
   title: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   techStack: string;
   description: string;
   tags: string[];
   isNew?: boolean;
-  onStart?: () => void;
+  onStart?: (id: string) => void;
   className?: string;
 }
 
@@ -32,6 +33,7 @@ const techStackColors = {
 } as const;
 
 export function ChallengeCard({
+  id,
   title,
   difficulty,
   techStack,
@@ -58,13 +60,13 @@ export function ChallengeCard({
         
         <div className="flex gap-2 mt-2">
           <Badge 
-            variant={difficultyColors[difficulty] as any}
+            variant={difficultyColors[difficulty] as "success" | "warning" | "destructive"}
             className="text-xs font-medium"
           >
             {difficulty}
           </Badge>
           <Badge 
-            variant={techStackColors[techStack as keyof typeof techStackColors] as any || 'secondary'}
+            variant={(techStackColors[techStack as keyof typeof techStackColors] as "info" | "success" | "destructive" | "warning") || 'secondary'}
             className="text-xs font-medium"
           >
             {techStack}
@@ -92,7 +94,7 @@ export function ChallengeCard({
         </div>
         
         <Button 
-          onClick={onStart}
+          onClick={() => onStart?.(id)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium"
         >
           Start
