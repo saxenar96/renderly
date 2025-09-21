@@ -12,14 +12,14 @@ export function ChallengesSection() {
   };
 
   return (
-    <section id="challenges" className="py-20 bg-gray-50">
+    <section id="challenges" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Practice Challenges
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Level up your frontend skills with hands-on coding challenges 
             designed by industry experts.
           </p>
@@ -91,7 +91,7 @@ export function ChallengesSection() {
 
         {/* View More Button */}
         <div className="text-center mt-12">
-          <button className="px-8 py-3 bg-white border-2 border-gray-300 text-gray-700 text-lg font-semibold rounded-xl hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
+          <button className="px-8 py-3 bg-background border-2 border-border text-foreground text-lg font-semibold rounded-xl hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
             View All Challenges
           </button>
         </div>

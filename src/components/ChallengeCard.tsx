@@ -44,14 +44,14 @@ export function ChallengeCard({
   className
 }: ChallengeCardProps) {
   return (
-    <Card className={cn("w-full max-w-md hover:shadow-lg transition-shadow bg-white", className)}>
+    <Card className={cn("w-full max-w-md hover:shadow-lg transition-shadow bg-card", className)}>
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-xl font-bold text-gray-900 pr-2">
+          <CardTitle className="text-xl font-bold text-card-foreground pr-2">
             {title}
           </CardTitle>
           {isNew && (
-            <div className="flex items-center gap-1 text-orange-600 text-sm font-medium">
+            <div className="flex items-center gap-1 text-orange-600 dark:text-orange-400 text-sm font-medium">
               <span className="text-lg">!</span>
               <span>New</span>
             </div>
@@ -75,7 +75,7 @@ export function ChallengeCard({
       </CardHeader>
 
       <CardContent className="pt-0">
-        <p className="text-gray-600 text-sm leading-relaxed">
+        <p className="text-muted-foreground text-sm leading-relaxed">
           {description}
         </p>
       </CardContent>
@@ -86,7 +86,7 @@ export function ChallengeCard({
             <Badge 
               key={index}
               variant="outline"
-              className="text-xs text-gray-500 bg-gray-50 border-gray-200"
+              className="text-xs text-muted-foreground bg-muted border-border"
             >
               {tag}
             </Badge>

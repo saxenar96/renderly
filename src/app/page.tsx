@@ -4,7 +4,7 @@ import { ChallengesSection } from "../components/ChallengesSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Header />
       <Hero />
       <ChallengesSection />
