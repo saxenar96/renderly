@@ -127,57 +127,120 @@ html {
 /* Sandpack Editor Scrolling Fixes */
 .sandpack-container {
   height: 100%;
+  min-height: 0; /* Allow flex shrinking */
 }
 
 .sandpack-container .sp-wrapper {
   height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .sandpack-container .sp-layout {
-  height: 100% !important;
+  height: calc(100% - 40px) !important; /* Account for tabs height */
+  min-height: 0 !important;
   display: flex !important;
   flex-direction: row !important;
+  flex: 1 !important;
 }
 
 .sandpack-container .sp-editor {
   height: 100% !important;
-  overflow: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important; /* Let Monaco handle its own scrolling */
   flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .sandpack-container .sp-code-editor {
   height: 100% !important;
-  overflow: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  flex: 1 !important;
 }
 
 .sandpack-container .sp-preview {
   height: 100% !important;
-  overflow: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
   flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .sandpack-container .sp-preview-iframe {
   height: 100% !important;
   width: 100% !important;
+  min-height: 0 !important;
+  flex: 1 !important;
 }
 
 .sandpack-container .sp-preview-iframe iframe {
   height: 100% !important;
   width: 100% !important;
   border: none !important;
+  min-height: 0 !important;
 }
 
 /* Ensure Monaco Editor is scrollable */
 .sandpack-container .monaco-editor {
   height: 100% !important;
+  min-height: 0 !important;
+  flex: 1 !important;
 }
 
 .sandpack-container .monaco-editor .overflow-guard {
   height: 100% !important;
+  min-height: 0 !important;
 }
 
 .sandpack-container .monaco-editor .view-overlay {
   height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Ensure Monaco Editor viewport is properly sized */
+.sandpack-container .monaco-editor .monaco-editor-background {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.sandpack-container .monaco-editor .view-lines {
+  min-height: 100% !important;
+}
+
+/* Fix for Monaco Editor scrolling container */
+.sandpack-container .monaco-editor .monaco-scrollable-element {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Additional fixes for Sandpack height issues */
+.sandpack-container .sp-wrapper .sp-tabs {
+  flex-shrink: 0 !important;
+  height: 40px !important;
+}
+
+.sandpack-container .sp-wrapper .sp-layout {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Ensure proper height calculation for the editor panel */
+.sandpack-container .sp-editor .sp-code-editor {
+  height: calc(100% - 0px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Fix for the Monaco Editor container within Sandpack */
+.sandpack-container .sp-editor .monaco-editor {
+  height: 100% !important;
+  min-height: 0 !important;
+  position: relative !important;
 }
 
 /* Theme-aware Sandpack styling */
@@ -232,4 +295,101 @@ html {
 /* Alternative approach - hide specific tabs by content */
 .sandpack-container .sp-tab:not([title*="App.tsx"]):not([title*="App.css"]) {
   display: none !important;
+}
+
+/* Dark mode scrollbar styling for Sandpack editor */
+.dark .sandpack-container ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark .sandpack-container ::-webkit-scrollbar-track {
+  background: hsl(var(--muted)) !important;
+  border-radius: 4px;
+}
+
+.dark .sandpack-container ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground)) !important;
+  border-radius: 4px;
+  border: 1px solid hsl(var(--muted));
+}
+
+.dark .sandpack-container ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground)) !important;
+}
+
+.dark .sandpack-container ::-webkit-scrollbar-corner {
+  background: hsl(var(--muted)) !important;
+}
+
+/* Firefox scrollbar styling for dark mode */
+.dark .sandpack-container {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+}
+
+/* Monaco Editor specific scrollbar styling in dark mode */
+.dark .sandpack-container .monaco-editor ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark .sandpack-container .monaco-editor ::-webkit-scrollbar-track {
+  background: hsl(var(--muted)) !important;
+}
+
+.dark .sandpack-container .monaco-editor ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground)) !important;
+  border-radius: 4px;
+}
+
+.dark .sandpack-container .monaco-editor ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground)) !important;
+}
+
+/* Preview iframe scrollbar styling in dark mode */
+.dark .sandpack-container .sp-preview-iframe iframe {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+}
+
+/* Additional dark mode scrollbar styling for Sandpack components */
+.dark .sandpack-container .sp-editor ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark .sandpack-container .sp-editor ::-webkit-scrollbar-track {
+  background: hsl(var(--muted)) !important;
+  border-radius: 4px;
+}
+
+.dark .sandpack-container .sp-editor ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground)) !important;
+  border-radius: 4px;
+  border: 1px solid hsl(var(--muted));
+}
+
+.dark .sandpack-container .sp-editor ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground)) !important;
+}
+
+.dark .sandpack-container .sp-preview ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark .sandpack-container .sp-preview ::-webkit-scrollbar-track {
+  background: hsl(var(--muted)) !important;
+  border-radius: 4px;
+}
+
+.dark .sandpack-container .sp-preview ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground)) !important;
+  border-radius: 4px;
+  border: 1px solid hsl(var(--muted));
+}
+
+.dark .sandpack-container .sp-preview ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground)) !important;
 }
