@@ -123,3 +123,59 @@ html {
 #__next-build-watcher {
   display: none !important;
 }
+
+/* Sandpack Editor Scrolling Fixes */
+.sandpack-container {
+  height: 100%;
+}
+
+.sandpack-container .sp-wrapper {
+  height: 100% !important;
+}
+
+.sandpack-container .sp-layout {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.sandpack-container .sp-editor {
+  height: 100% !important;
+  overflow: auto !important;
+  flex: 1 !important;
+}
+
+.sandpack-container .sp-code-editor {
+  height: 100% !important;
+  overflow: auto !important;
+}
+
+.sandpack-container .sp-preview {
+  height: 100% !important;
+  overflow: auto !important;
+  flex: 1 !important;
+}
+
+.sandpack-container .sp-preview-iframe {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.sandpack-container .sp-preview-iframe iframe {
+  height: 100% !important;
+  width: 100% !important;
+  border: none !important;
+}
+
+/* Ensure Monaco Editor is scrollable */
+.sandpack-container .monaco-editor {
+  height: 100% !important;
+}
+
+.sandpack-container .monaco-editor .overflow-guard {
+  height: 100% !important;
+}
+
+.sandpack-container .monaco-editor .view-overlay {
+  height: 100% !important;
+}

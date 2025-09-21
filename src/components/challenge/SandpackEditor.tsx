@@ -45,8 +45,13 @@ export function SandpackEditor({ challenge }: SandpackEditorProps) {
   const createSandpackFiles = (challenge: Challenge): SandpackFiles => {
     const template = challenge.sandpackTemplate || getTemplate(challenge.techStack);
     
+    // Use custom files if provided, otherwise create base files
+    if (challenge.sandpackFiles) {
+      return challenge.sandpackFiles;
+    }
+
     // Base files for different templates
-    const baseFiles: Record<SandpackPredefinedTemplate, SandpackFiles> = {
+    const baseFiles: Record<string, SandpackFiles> = {
       'react-ts': {
         '/App.tsx': {
           code: `${challenge.starterCode}
@@ -375,8 +380,7 @@ export class AppComponent {
       },
     };
 
-    // Use custom files if provided, otherwise use base files
-    return challenge.sandpackFiles || baseFiles[template];
+    return baseFiles[template] || baseFiles['react-ts'];
   };
 
   const template = challenge.sandpackTemplate || getTemplate(challenge.techStack);
@@ -390,40 +394,44 @@ export class AppComponent {
         </div>
         
         <div className="flex-1 overflow-hidden">
-          <Sandpack
-            template={template}
-            files={files}
-            options={{
-              showNavigator: false,
-              showRefreshButton: true,
-              showTabs: true,
-              showLineNumbers: true,
-              showInlineErrors: true,
-              wrapContent: true,
-              editorHeight: '100%',
-              editorWidthPercentage: 50,
-              resizablePanels: true,
-              autorun: true,
-              recompileMode: 'delayed',
-              recompileDelay: 300,
-            }}
-            theme="auto"
-            customSetup={{
-              dependencies: {
-                // Add common dependencies based on template
-                ...(template === 'react-ts' && {
-                  'react': '^18.0.0',
-                  'react-dom': '^18.0.0',
-                  '@types/react': '^18.0.0',
-                  '@types/react-dom': '^18.0.0',
-                }),
-                ...(template === 'vue-ts' && {
-                  'vue': '^3.0.0',
-                  '@vue/runtime-dom': '^3.0.0',
-                }),
-              },
-            }}
-          />
+          <div className="h-full sandpack-container">
+            <Sandpack
+              template={template}
+              files={files}
+              options={{
+                showNavigator: false,
+                showRefreshButton: true,
+                showTabs: true,
+                showLineNumbers: true,
+                showInlineErrors: true,
+                wrapContent: false,
+                editorHeight: '100%',
+                editorWidthPercentage: 50,
+                resizablePanels: true,
+                autorun: true,
+                recompileMode: 'delayed',
+                recompileDelay: 300,
+                showConsole: false,
+                showConsoleButton: false,
+              }}
+              theme="auto"
+              customSetup={{
+                dependencies: {
+                  // Add common dependencies based on template
+                  ...(template === 'react-ts' && {
+                    'react': '^18.0.0',
+                    'react-dom': '^18.0.0',
+                    '@types/react': '^18.0.0',
+                    '@types/react-dom': '^18.0.0',
+                  }),
+                  ...(template === 'vue-ts' && {
+                    'vue': '^3.0.0',
+                    '@vue/runtime-dom': '^3.0.0',
+                  }),
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
