@@ -220,6 +220,7 @@ input, textarea {
   margin: 10px 0;
 }`,
         },
+        // Hidden files - these won't show in tabs but are needed for the app to work
         '/index.tsx': {
           code: `import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -228,6 +229,7 @@ import App from './App';
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(<App />);`,
+          hidden: true,
         },
         '/index.html': {
           code: `<!DOCTYPE html>
@@ -241,6 +243,7 @@ root.render(<App />);`,
   <div id="root"></div>
 </body>
 </html>`,
+          hidden: true,
         },
       },
       'vanilla-ts': {

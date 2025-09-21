@@ -212,3 +212,24 @@ html {
 .dark .sandpack-container .sp-preview {
   background: hsl(var(--background)) !important;
 }
+
+/* Hide unwanted file tabs - only show App.tsx and App.css */
+.sandpack-container .sp-tabs {
+  display: flex !important;
+}
+
+.sandpack-container .sp-tab {
+  display: none !important;
+}
+
+/* Show only App.tsx and App.css tabs */
+.sandpack-container .sp-tab[data-active="true"],
+.sandpack-container .sp-tab[title*="App.tsx"],
+.sandpack-container .sp-tab[title*="App.css"] {
+  display: flex !important;
+}
+
+/* Alternative approach - hide specific tabs by content */
+.sandpack-container .sp-tab:not([title*="App.tsx"]):not([title*="App.css"]) {
+  display: none !important;
+}
