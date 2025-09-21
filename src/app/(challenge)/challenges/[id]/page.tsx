@@ -9,8 +9,8 @@ export default function ChallengePage() {
   const challengeId = params.id as string;
 
   // Mock challenge data - in a real app, this would come from an API
-  const challenges = {
-    'create-reusable-button': {
+  const challenges = [
+    {
       id: 'create-reusable-button',
       title: 'Create a Reusable Button Component',
       difficulty: 'Easy' as const,
@@ -26,18 +26,10 @@ export default function ChallengePage() {
         'Add proper TypeScript interfaces',
         'Include hover and focus states'
       ],
-      starterCode: `import React from 'react';
+      starterCode: `// Button Component Implementation
+// This is a simplified version for code execution
 
-interface ButtonProps {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
-  className?: string;
-}
-
-export const Button: React.FC<ButtonProps> = ({
+const Button = ({
   children,
   variant = 'primary',
   size = 'md',
@@ -46,18 +38,53 @@ export const Button: React.FC<ButtonProps> = ({
   className = ''
 }) => {
   // Your implementation here
-  return (
-    <button
-      className={\`\${className}\`}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
-};`
+  console.log('Button component called with:', { children, variant, size, disabled, className });
+  
+  // Simulate button behavior
+  const handleClick = () => {
+    if (!disabled && onClick) {
+      console.log('Button clicked!');
+      onClick();
+    } else if (disabled) {
+      console.log('Button is disabled');
+    }
+  };
+  
+  // Return a mock button object instead of JSX
+  return {
+    type: 'button',
+    children: children,
+    variant: variant,
+    size: size,
+    disabled: disabled,
+    className: className,
+    onClick: handleClick
+  };
+};
+
+// Test the Button component
+console.log('Testing Button component...');
+
+const testButton = Button({
+  children: 'Click me',
+  variant: 'primary',
+  size: 'md',
+  onClick: () => console.log('Button was clicked!')
+});
+
+console.log('Button created:', testButton);
+
+// Test disabled state
+const disabledButton = Button({
+  children: 'Disabled',
+  disabled: true
+});
+
+console.log('Disabled button:', disabledButton);
+disabledButton.onClick(); // Should log "Button is disabled"
+`
     },
-    'build-todo-list': {
+    {
       id: 'build-todo-list',
       title: 'Build a Todo List App',
       difficulty: 'Medium' as const,
@@ -95,7 +122,7 @@ export const TodoApp: React.FC = () => {
   );
 };`
     },
-    'create-data-table': {
+    {
       id: 'create-data-table',
       title: 'Create a Data Table with Sorting',
       difficulty: 'Hard' as const,
@@ -142,7 +169,7 @@ export const DataTable = <T,>({
   );
 };`
     },
-    'build-modal-component': {
+    {
       id: 'build-modal-component',
       title: 'Build a Modal Component',
       difficulty: 'Easy' as const,
@@ -184,7 +211,7 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };`
     },
-    'implement-infinite-scroll': {
+    {
       id: 'implement-infinite-scroll',
       title: 'Implement Infinite Scroll',
       difficulty: 'Medium' as const,
@@ -226,7 +253,7 @@ export const InfiniteScroll = <T,>({
   );
 };`
     },
-    'create-drag-drop-interface': {
+    {
       id: 'create-drag-drop-interface',
       title: 'Create a Drag & Drop Interface',
       difficulty: 'Hard' as const,
@@ -269,9 +296,9 @@ export const DragDropList: React.FC<DragDropListProps> = ({
   );
 };`
     }
-  };
+  ];
 
-  const challenge = challenges[challengeId as keyof typeof challenges];
+  const challenge = challenges.find(c => c.id === challengeId);
 
   if (!challenge) {
     return (

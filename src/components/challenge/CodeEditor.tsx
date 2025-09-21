@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { Button } from '../ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { MonacoEditor } from './MonacoEditor';
 
@@ -18,7 +19,7 @@ export interface Challenge {
 
 interface CodeEditorProps {
   challenge: Challenge;
-  onRun?: (code: string) => void;
+  onRun?: (code: string, language: string) => void;
 }
 
 export function CodeEditor({ challenge, onRun }: CodeEditorProps) {
@@ -26,8 +27,8 @@ export function CodeEditor({ challenge, onRun }: CodeEditorProps) {
   const [language, setLanguage] = useState<'javascript' | 'typescript'>('javascript');
 
   const handleRun = useCallback(() => {
-    onRun?.(code);
-  }, [onRun, code]);
+    onRun?.(code, language);
+  }, [onRun, code, language]);
 
 
   const handleCodeChange = (value: string | undefined) => {
@@ -56,7 +57,7 @@ export function CodeEditor({ challenge, onRun }: CodeEditorProps) {
         <div className="border-b border-border px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-card-foreground">Code Editor</h2>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Select value={language} onValueChange={handleLanguageChange}>
                 <SelectTrigger className="w-32">
                   <SelectValue />
@@ -66,6 +67,13 @@ export function CodeEditor({ challenge, onRun }: CodeEditorProps) {
                   <SelectItem value="typescript">TypeScript</SelectItem>
                 </SelectContent>
               </Select>
+              <Button 
+                onClick={handleRun}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+                size="sm"
+              >
+                Run
+              </Button>
             </div>
           </div>
           <div className="flex items-center gap-4 mt-2">

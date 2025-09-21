@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChallengeHeader, ProblemDescription, CodeEditor, OutputPreview, Challenge } from './challenge';
+import { executeCodeSafe } from '../lib/codeExecutor';
 
 interface ChallengeDetailProps {
   challenge: Challenge;
@@ -26,13 +27,22 @@ export function ChallengeDetail({ challenge }: ChallengeDetailProps) {
     console.log('Show solution for challenge:', challenge.id);
   };
 
-  const handleRun = (code: string) => {
+  const handleRun = (code: string, language: string) => {
     try {
-      // In a real app, this would execute the code
-      console.log('Running code:', code);
-      setOutput('Code executed successfully! (This is a placeholder output)');
+      console.log('Running code:', code, 'Language:', language);
+      
+      // Execute the code using our safe executor
+      const result = executeCodeSafe(code, language as 'javascript' | 'typescript');
+      
+      if (result.success) {
+        setOutput(result.output);
+        setError('');
+      } else {
+        setError(result.error || 'Execution failed');
+        setOutput(result.output);
+      }
+      
       setHasRun(true);
-      setError('');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       setHasRun(true);
@@ -59,7 +69,6 @@ export function ChallengeDetail({ challenge }: ChallengeDetailProps) {
         <CodeEditor 
           challenge={challenge}
           onRun={handleRun}
-          onReset={handleReset}
         />
         <OutputPreview 
           output={output}
