@@ -3,6 +3,7 @@
 import React from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
+import { ModeToggle } from '../mode-toggle';
 
 export interface Challenge {
   id: string;
@@ -73,13 +74,14 @@ export function ChallengeHeader({
             </div>
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           <Button variant="outline" className="px-4 py-2" onClick={onHints}>
             Hints
           </Button>
           <Button variant="outline" className="px-4 py-2" onClick={onSolution}>
             Solution
           </Button>
+          <ModeToggle />
         </div>
       </div>
     </div>
