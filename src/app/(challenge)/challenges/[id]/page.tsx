@@ -26,10 +26,18 @@ export default function ChallengePage() {
         'Add proper TypeScript interfaces',
         'Include hover and focus states'
       ],
-      starterCode: `// Button Component Implementation
-// This is a simplified version for code execution
+      starterCode: `import React from 'react';
 
-const Button = ({
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  onClick?: () => void;
+  className?: string;
+}
+
+const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'md',
@@ -38,51 +46,92 @@ const Button = ({
   className = ''
 }) => {
   // Your implementation here
-  console.log('Button component called with:', { children, variant, size, disabled, className });
+  const baseClasses = 'font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
   
-  // Simulate button behavior
+  const variantClasses = {
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
+    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-blue-500'
+  };
+  
+  const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg'
+  };
+  
+  const disabledClasses = disabled 
+    ? 'opacity-50 cursor-not-allowed' 
+    : 'cursor-pointer';
+  
+  const classes = \`\${baseClasses} \${variantClasses[variant]} \${sizeClasses[size]} \${disabledClasses} \${className}\`;
+  
   const handleClick = () => {
     if (!disabled && onClick) {
-      console.log('Button clicked!');
       onClick();
-    } else if (disabled) {
-      console.log('Button is disabled');
     }
   };
   
-  // Return a mock button object instead of JSX
-  return {
-    type: 'button',
-    children: children,
-    variant: variant,
-    size: size,
-    disabled: disabled,
-    className: className,
-    onClick: handleClick
-  };
+  return (
+    <button
+      className={classes}
+      disabled={disabled}
+      onClick={handleClick}
+    >
+      {children}
+    </button>
+  );
 };
 
-// Test the Button component
-console.log('Testing Button component...');
+const App: React.FC = () => {
+  const handleButtonClick = () => {
+    alert('Button clicked!');
+  };
 
-const testButton = Button({
-  children: 'Click me',
-  variant: 'primary',
-  size: 'md',
-  onClick: () => console.log('Button was clicked!')
-});
+  return (
+    <div className="container">
+      <h1>Button Component Demo</h1>
+      
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Primary Buttons</h2>
+          <div className="space-x-2">
+            <Button onClick={handleButtonClick}>Click me</Button>
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="lg">Large</Button>
+          </div>
+        </div>
+        
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Secondary Buttons</h2>
+          <div className="space-x-2">
+            <Button variant="secondary" onClick={handleButtonClick}>Secondary</Button>
+            <Button variant="secondary" size="sm">Small Secondary</Button>
+          </div>
+        </div>
+        
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Outline Buttons</h2>
+          <div className="space-x-2">
+            <Button variant="outline" onClick={handleButtonClick}>Outline</Button>
+            <Button variant="outline" size="sm">Small Outline</Button>
+          </div>
+        </div>
+        
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Disabled Buttons</h2>
+          <div className="space-x-2">
+            <Button disabled>Disabled Primary</Button>
+            <Button variant="secondary" disabled>Disabled Secondary</Button>
+            <Button variant="outline" disabled>Disabled Outline</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-console.log('Button created:', testButton);
-
-// Test disabled state
-const disabledButton = Button({
-  children: 'Disabled',
-  disabled: true
-});
-
-console.log('Disabled button:', disabledButton);
-disabledButton.onClick(); // Should log "Button is disabled"
-`
+export default App;`
     },
     {
       id: 'build-todo-list',
@@ -109,18 +158,144 @@ interface Todo {
   createdAt: Date;
 }
 
-export const TodoApp: React.FC = () => {
+const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [newTodo, setNewTodo] = useState('');
   
-  // Your implementation here
+  // Load todos from localStorage on component mount
+  useEffect(() => {
+    const savedTodos = localStorage.getItem('todos');
+    if (savedTodos) {
+      try {
+        const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
+          ...todo,
+          createdAt: new Date(todo.createdAt)
+        }));
+        setTodos(parsedTodos);
+      } catch (error) {
+        console.error('Error loading todos:', error);
+      }
+    }
+  }, []);
+  
+  // Save todos to localStorage whenever todos change
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+  
+  const addTodo = () => {
+    if (newTodo.trim()) {
+      const todo: Todo = {
+        id: Date.now().toString(),
+        text: newTodo.trim(),
+        completed: false,
+        createdAt: new Date()
+      };
+      setTodos([...todos, todo]);
+      setNewTodo('');
+    }
+  };
+  
+  const toggleTodo = (id: string) => {
+    setTodos(todos.map(todo => 
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    ));
+  };
+  
+  const deleteTodo = (id: string) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+  
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'active') return !todo.completed;
+    if (filter === 'completed') return todo.completed;
+    return true;
+  });
+  
+  const completedCount = todos.filter(todo => todo.completed).length;
+  const activeCount = todos.length - completedCount;
   
   return (
-    <div className="todo-app">
-      {/* Your JSX here */}
+    <div className="container">
+      <h1>Todo List App</h1>
+      
+      <div className="space-y-4">
+        {/* Add Todo Form */}
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+            placeholder="Add a new todo..."
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            onClick={addTodo}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Add
+          </button>
+        </div>
+        
+        {/* Filter Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => setFilter('all')}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
+          >
+            All ({todos.length})
+          </button>
+          <button
+            onClick={() => setFilter('active')}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
+          >
+            Active ({activeCount})
+          </button>
+          <button
+            onClick={() => setFilter('completed')}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
+          >
+            Completed ({completedCount})
+          </button>
+        </div>
+        
+        {/* Todo List */}
+        <div className="space-y-2">
+          {filteredTodos.length === 0 ? (
+            <p className="text-gray-500 text-center py-8">
+              {filter === 'all' ? 'No todos yet. Add one above!' : 
+               filter === 'active' ? 'No active todos!' : 'No completed todos!'}
+            </p>
+          ) : (
+            filteredTodos.map(todo => (
+              <div key={todo.id} className={\`todo-item \${todo.completed ? 'completed' : ''}\`}>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo.id)}
+                  className="mr-3"
+                />
+                <span className={\`flex-1 \${todo.completed ? 'line-through text-gray-500' : ''}\`}>
+                  {todo.text}
+                </span>
+                <button
+                  onClick={() => deleteTodo(todo.id)}
+                  className="text-red-600 hover:text-red-800 text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
-};`
+};
+
+export default TodoApp;`
     },
     {
       id: 'create-data-table',
@@ -154,20 +329,179 @@ interface DataTableProps<T> {
   searchable?: boolean;
 }
 
-export const DataTable = <T,>({ 
+const DataTable = <T,>({ 
   data, 
   columns, 
   pageSize = 10,
   searchable = true 
 }: DataTableProps<T>) => {
-  // Your implementation here
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Filter data based on search term
+  const filteredData = useMemo(() => {
+    if (!searchTerm) return data;
+    
+    return data.filter(item =>
+      columns.some(column => {
+        const value = item[column.key];
+        return value && value.toString().toLowerCase().includes(searchTerm.toLowerCase());
+      })
+    );
+  }, [data, searchTerm, columns]);
+  
+  // Sort data
+  const sortedData = useMemo(() => {
+    if (!sortConfig) return filteredData;
+    
+    return [...filteredData].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      
+      if (aValue < bValue) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [filteredData, sortConfig]);
+  
+  // Paginate data
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return sortedData.slice(startIndex, startIndex + pageSize);
+  }, [sortedData, currentPage, pageSize]);
+  
+  const totalPages = Math.ceil(sortedData.length / pageSize);
+  
+  const handleSort = (key: keyof T) => {
+    setSortConfig(prev => {
+      if (prev?.key === key) {
+        return prev.direction === 'asc' 
+          ? { key, direction: 'desc' }
+          : null;
+      }
+      return { key, direction: 'asc' };
+    });
+  };
   
   return (
     <div className="data-table">
-      {/* Your JSX here */}
+      {searchable && (
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      )}
+      
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-50">
+              {columns.map((column) => (
+                <th
+                  key={String(column.key)}
+                  className={\`px-4 py-2 text-left border-b \${column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''}\`}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                >
+                  <div className="flex items-center gap-1">
+                    {column.title}
+                    {column.sortable && sortConfig?.key === column.key && (
+                      <span className="text-blue-600">
+                        {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                      </span>
+                    )}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                {columns.map((column) => (
+                  <td key={String(column.key)} className="px-4 py-2 border-b">
+                    {column.render 
+                      ? column.render(item[column.key], item)
+                      : String(item[column.key] || '')
+                    }
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-4">
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          
+          <span className="px-3 py-1">
+            Page {currentPage} of {totalPages}
+          </span>
+          
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
-};`
+};
+
+// Sample data for demonstration
+const sampleData = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', age: 28, department: 'Engineering' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', age: 32, department: 'Marketing' },
+  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', age: 45, department: 'Sales' },
+  { id: 4, name: 'Alice Brown', email: 'alice@example.com', age: 29, department: 'Engineering' },
+  { id: 5, name: 'Charlie Wilson', email: 'charlie@example.com', age: 38, department: 'HR' },
+  { id: 6, name: 'Diana Davis', email: 'diana@example.com', age: 31, department: 'Marketing' },
+  { id: 7, name: 'Eve Miller', email: 'eve@example.com', age: 27, department: 'Engineering' },
+  { id: 8, name: 'Frank Garcia', email: 'frank@example.com', age: 42, department: 'Sales' },
+];
+
+const columns = [
+  { key: 'name' as keyof typeof sampleData[0], title: 'Name', sortable: true },
+  { key: 'email' as keyof typeof sampleData[0], title: 'Email', sortable: true },
+  { key: 'age' as keyof typeof sampleData[0], title: 'Age', sortable: true },
+  { key: 'department' as keyof typeof sampleData[0], title: 'Department', sortable: true },
+];
+
+const App: React.FC = () => {
+  return (
+    <div className="container">
+      <h1>Data Table with Sorting & Pagination</h1>
+      <DataTable 
+        data={sampleData} 
+        columns={columns} 
+        pageSize={5}
+        searchable={true}
+      />
+    </div>
+  );
+};
+
+export default App;`
     },
     {
       id: 'build-modal-component',
@@ -305,7 +639,7 @@ export const DragDropList: React.FC<DragDropListProps> = ({
       <div className="h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-foreground mb-4">Challenge Not Found</h1>
-          <p className="text-muted-foreground mb-8">The challenge you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground mb-8">The challenge you&apos;re looking for doesn&apos;t exist.</p>
           <button
             onClick={() => router.push('/')}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
