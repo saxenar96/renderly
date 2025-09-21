@@ -34,13 +34,13 @@ export function CodeEditor({ challenge, onRun, onReset }: CodeEditorProps) {
   };
 
   return (
-    <div className="w-1/3 border-r border-gray-200 bg-white">
+    <div className="w-1/3 border-r border-border bg-card">
       <div className="h-full flex flex-col">
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-900">Code Editor</h2>
+        <div className="border-b border-border px-6 py-4">
+          <h2 className="text-lg font-semibold text-card-foreground">Code Editor</h2>
           <div className="flex items-center gap-4 mt-2">
-            <span className="text-sm text-gray-500">TypeScript</span>
-            <span className="text-sm text-gray-500">Cmd/Ctrl + Enter to run</span>
+            <span className="text-sm text-muted-foreground">TypeScript</span>
+            <span className="text-sm text-muted-foreground">Cmd/Ctrl + Enter to run</span>
           </div>
         </div>
         

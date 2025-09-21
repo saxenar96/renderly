@@ -46,7 +46,7 @@ export function ChallengeDetail({ challenge }: ChallengeDetailProps) {
   };
 
   return (
-    <div className="h-screen bg-gray-50 overflow-hidden">
+    <div className="h-screen bg-background overflow-hidden">
       <ChallengeHeader 
         challenge={challenge}
         onBack={handleBack}
