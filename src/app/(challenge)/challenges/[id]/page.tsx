@@ -1,8 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { Header } from '../../../components/Header';
-import { ChallengeDetail } from '../../../components/ChallengeDetail';
+import { ChallengeDetail } from '../../../../components/ChallengeDetail';
 
 export default function ChallengePage() {
   const params = useParams();
@@ -276,28 +275,20 @@ export const DragDropList: React.FC<DragDropListProps> = ({
 
   if (!challenge) {
     return (
-      <div className="min-h-screen">
-        <Header />
-        <div className="flex items-center justify-center min-h-[60vh] pt-20">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Challenge Not Found</h1>
-            <p className="text-gray-600 mb-8">The challenge you're looking for doesn't exist.</p>
-            <button
-              onClick={() => router.push('/')}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Back to Challenges
-            </button>
-          </div>
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Challenge Not Found</h1>
+          <p className="text-gray-600 mb-8">The challenge you're looking for doesn't exist.</p>
+          <button
+            onClick={() => router.push('/')}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Back to Challenges
+          </button>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen">
-      <Header />
-      <ChallengeDetail challenge={challenge} />
-    </div>
-  );
+  return <ChallengeDetail challenge={challenge} />;
 }
