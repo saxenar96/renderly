@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button } from '../ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { MonacoEditor } from './MonacoEditor';
 
 export interface Challenge {
@@ -19,23 +19,23 @@ export interface Challenge {
 interface CodeEditorProps {
   challenge: Challenge;
   onRun?: (code: string) => void;
-  onReset?: () => void;
 }
 
-export function CodeEditor({ challenge, onRun, onReset }: CodeEditorProps) {
+export function CodeEditor({ challenge, onRun }: CodeEditorProps) {
   const [code, setCode] = useState(challenge.starterCode);
+  const [language, setLanguage] = useState<'javascript' | 'typescript'>('javascript');
 
   const handleRun = useCallback(() => {
     onRun?.(code);
   }, [onRun, code]);
 
-  const handleReset = () => {
-    setCode(challenge.starterCode);
-    onReset?.();
-  };
 
   const handleCodeChange = (value: string | undefined) => {
     setCode(value || '');
+  };
+
+  const handleLanguageChange = (value: string) => {
+    setLanguage(value as 'javascript' | 'typescript');
   };
 
   // Listen for Ctrl/Cmd + Enter to run code
@@ -54,9 +54,21 @@ export function CodeEditor({ challenge, onRun, onReset }: CodeEditorProps) {
     <div className="w-1/3 border-r border-border bg-card">
       <div className="h-full flex flex-col">
         <div className="border-b border-border px-6 py-4">
-          <h2 className="text-lg font-semibold text-card-foreground">Code Editor</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-card-foreground">Code Editor</h2>
+            <div className="flex items-center gap-4">
+              <Select value={language} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="javascript">JavaScript</SelectItem>
+                  <SelectItem value="typescript">TypeScript</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <div className="flex items-center gap-4 mt-2">
-            <span className="text-sm text-muted-foreground">TypeScript</span>
             <span className="text-sm text-muted-foreground">Cmd/Ctrl + Enter to run</span>
           </div>
         </div>
@@ -66,7 +78,7 @@ export function CodeEditor({ challenge, onRun, onReset }: CodeEditorProps) {
             <MonacoEditor
               value={code}
               onChange={handleCodeChange}
-              language="typescript"
+              language={language}
               height="100%"
             />
           </div>

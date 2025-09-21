@@ -39,8 +39,48 @@ export function MonacoEditor({
       typeRoots: ['node_modules/@types']
     });
 
-    // Add React types
+    // Configure JavaScript language features
+    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+      target: monaco.languages.typescript.ScriptTarget.ES2020,
+      allowNonTsExtensions: true,
+      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+      module: monaco.languages.typescript.ModuleKind.CommonJS,
+      noEmit: true,
+      esModuleInterop: true,
+      jsx: monaco.languages.typescript.JsxEmit.React,
+      reactNamespace: 'React',
+      allowJs: true,
+      typeRoots: ['node_modules/@types']
+    });
+
+    // Add React types for TypeScript
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      `declare module 'react' {
+        export = React;
+        export as namespace React;
+        export interface Component<P = {}, S = {}> {
+          render(): ReactElement<any> | null;
+        }
+        export interface ReactElement<P = any> {
+          type: any;
+          props: P;
+          key: string | number | null;
+        }
+        export interface ComponentType<P = {}> {
+          (props: P, context?: any): ReactElement<any> | null;
+        }
+        export function createElement<P>(
+          type: string | ComponentType<P>,
+          props?: P & { children?: any },
+          ...children: any[]
+        ): ReactElement<P>;
+        export const Fragment: ComponentType<{ children?: any }>;
+      }`,
+      'file:///node_modules/@types/react/index.d.ts'
+    );
+
+    // Add React types for JavaScript
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(
       `declare module 'react' {
         export = React;
         export as namespace React;
