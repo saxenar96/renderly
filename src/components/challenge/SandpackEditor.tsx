@@ -3,6 +3,7 @@
 import React from 'react';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import { SandpackFiles, SandpackPredefinedTemplate } from '@codesandbox/sandpack-react';
+import { useTheme } from 'next-themes';
 
 export interface Challenge {
   id: string;
@@ -23,6 +24,8 @@ interface SandpackEditorProps {
 }
 
 export function SandpackEditor({ challenge }: SandpackEditorProps) {
+  const { resolvedTheme } = useTheme();
+  
   // Determine the appropriate Sandpack template based on tech stack
   const getTemplate = (techStack: string): SandpackPredefinedTemplate => {
     switch (techStack.toLowerCase()) {
@@ -414,7 +417,7 @@ export class AppComponent {
                 showConsole: false,
                 showConsoleButton: false,
               }}
-              theme="auto"
+              theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
               customSetup={{
                 dependencies: {
                   // Add common dependencies based on template
