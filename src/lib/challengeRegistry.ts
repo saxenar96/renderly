@@ -1,9 +1,15 @@
 import { SandpackFiles } from '@codesandbox/sandpack-react';
+import { appStarterCode as createReusableButtonAppStarterCode, cssStarterCode as createReusableButtonCssStarterCode } from '../snippets/create-reusable-button/starter';
 import { appSolutionCode as createReusableButtonAppSolutionCode, cssSolutionCode as createReusableButtonCssSolutionCode } from '../snippets/create-reusable-button/solution';
+import { appStarterCode as buildTodoListAppStarterCode, cssStarterCode as buildTodoListCssStarterCode } from '../snippets/build-todo-list/starter';
 import { appSolutionCode as buildTodoListAppSolutionCode, cssSolutionCode as buildTodoListCssSolutionCode } from '../snippets/build-todo-list/solution';
+import { appStarterCode as buildModalComponentAppStarterCode, cssStarterCode as buildModalComponentCssStarterCode } from '../snippets/build-modal-component/starter';
 import { appSolutionCode as buildModalComponentAppSolutionCode, cssSolutionCode as buildModalComponentCssSolutionCode } from '../snippets/build-modal-component/solution';
+import { appStarterCode as createDataTableAppStarterCode, cssStarterCode as createDataTableCssStarterCode } from '../snippets/create-data-table/starter';
 import { appSolutionCode as createDataTableAppSolutionCode, cssSolutionCode as createDataTableCssSolutionCode } from '../snippets/create-data-table/solution';
+import { appStarterCode as createDragDropInterfaceAppStarterCode, cssStarterCode as createDragDropInterfaceCssStarterCode } from '../snippets/create-drag-drop-interface/starter';
 import { appSolutionCode as createDragDropInterfaceAppSolutionCode, cssSolutionCode as createDragDropInterfaceCssSolutionCode } from '../snippets/create-drag-drop-interface/solution';
+import { appStarterCode as implementInfiniteScrollAppStarterCode, cssStarterCode as implementInfiniteScrollCssStarterCode } from '../snippets/implement-infinite-scroll/starter';
 import { appSolutionCode as implementInfiniteScrollAppSolutionCode, cssSolutionCode as implementInfiniteScrollCssSolutionCode } from '../snippets/implement-infinite-scroll/solution';
 
 export interface Challenge {
@@ -43,6 +49,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Include hover and focus states'
     ],
     starterCode: {
+      'App.tsx': createReusableButtonAppStarterCode,
+      'App.css': createReusableButtonCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': createReusableButtonAppSolutionCode,
       'App.css': createReusableButtonCssSolutionCode
     }
@@ -64,6 +74,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Add proper TypeScript types'
     ],
     starterCode: {
+      'App.tsx': buildTodoListAppStarterCode,
+      'App.css': buildTodoListCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': buildTodoListAppSolutionCode,
       'App.css': buildTodoListCssSolutionCode
     }
@@ -86,6 +100,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Support custom content and title'
     ],
     starterCode: {
+      'App.tsx': buildModalComponentAppStarterCode,
+      'App.css': buildModalComponentCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': buildModalComponentAppSolutionCode,
       'App.css': buildModalComponentCssSolutionCode
     }
@@ -108,6 +126,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Add loading and empty states'
     ],
     starterCode: {
+      'App.tsx': createDataTableAppStarterCode,
+      'App.css': createDataTableCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': createDataTableAppSolutionCode,
       'App.css': createDataTableCssSolutionCode
     }
@@ -130,6 +152,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Ensure accessibility compliance'
     ],
     starterCode: {
+      'App.tsx': createDragDropInterfaceAppStarterCode,
+      'App.css': createDragDropInterfaceCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': createDragDropInterfaceAppSolutionCode,
       'App.css': createDragDropInterfaceCssSolutionCode
     }
@@ -152,6 +178,10 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Include proper error boundaries'
     ],
     starterCode: {
+      'App.tsx': implementInfiniteScrollAppStarterCode,
+      'App.css': implementInfiniteScrollCssStarterCode
+    },
+    solutionCode: {
       'App.tsx': implementInfiniteScrollAppSolutionCode,
       'App.css': implementInfiniteScrollCssSolutionCode
     }

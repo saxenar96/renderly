@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React, { useEffect, useRef } from 'react';
+export const appStarterCode = `import React, { useEffect, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -35,7 +35,7 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

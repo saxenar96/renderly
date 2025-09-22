@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React from 'react';
+export const appStarterCode = `import React from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
 export default App;`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

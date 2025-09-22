@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React, { useState, useEffect, useCallback } from 'react';
+export const appStarterCode = `import React, { useState, useEffect, useCallback } from 'react';
 
 interface InfiniteScrollProps<T> {
   data: T[];
@@ -40,7 +40,7 @@ export const InfiniteScroll = <T,>({
   );
 };`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

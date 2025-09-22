@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React, { useState, useEffect } from 'react';
+export const appStarterCode = `import React, { useState, useEffect } from 'react';
 
 interface Todo {
   id: string;
@@ -124,7 +124,7 @@ const TodoApp: React.FC = () => {
 
 export default TodoApp;`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

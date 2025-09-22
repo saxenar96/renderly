@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React, { useState, useMemo } from 'react';
+export const appStarterCode = `import React, { useState, useMemo } from 'react';
 
 interface Column<T> {
   key: keyof T;
@@ -156,7 +156,7 @@ const App: React.FC = () => {
 
 export default App;`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

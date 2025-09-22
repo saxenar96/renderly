@@ -1,4 +1,4 @@
-export const appSolutionCode = `import React, { useState, useRef } from 'react';
+export const appStarterCode = `import React, { useState, useRef } from 'react';
 
 interface DragDropItem {
   id: string;
@@ -36,7 +36,7 @@ export const DragDropList: React.FC<DragDropListProps> = ({
   );
 };`;
 
-export const cssSolutionCode = `body {
+export const cssStarterCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
