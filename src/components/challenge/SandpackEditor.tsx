@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sandpack } from '@codesandbox/sandpack-react';
 import { SandpackFiles, SandpackPredefinedTemplate } from '@codesandbox/sandpack-react';
 import { useTheme } from 'next-themes';
+import { createSandpackFiles } from '../../lib/challengeRegistry';
 
 export interface Challenge {
   id: string;
@@ -14,7 +15,14 @@ export interface Challenge {
   tags: string[];
   isNew?: boolean;
   requirements: string[];
-  starterCode: string;
+  starterCode: {
+    'App.tsx': string;
+    'App.css': string;
+  };
+  solutionCode?: {
+    'App.tsx': string;
+    'App.css': string;
+  };
   sandpackTemplate?: SandpackPredefinedTemplate;
   sandpackFiles?: SandpackFiles;
 }
@@ -67,352 +75,18 @@ export function SandpackEditor({ challenge }: SandpackEditorProps) {
   };
 
   // Create files for Sandpack based on the challenge
-  const createSandpackFiles = (challenge: Challenge): SandpackFiles => {
-    const template = challenge.sandpackTemplate || getTemplate(challenge.techStack);
-    
-    // Use custom files if provided, otherwise create base files
+  const createSandpackFilesForChallenge = (challenge: Challenge): SandpackFiles => {
+    // Use custom files if provided, otherwise use snippet files
     if (challenge.sandpackFiles) {
       return challenge.sandpackFiles;
     }
 
-    // Base files for different templates
-    const baseFiles: Record<string, SandpackFiles> = {
-      'react-ts': {
-        '/App.tsx': {
-          code: `${challenge.starterCode}
-
-import './App.css';`,
-        },
-        '/App.css': {
-          code: `body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.todo-item.completed {
-  text-decoration: line-through;
-  color: #666;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.data-table th,
-.data-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-.data-table th {
-  background-color: #f2f2f2;
-  cursor: pointer;
-}
-
-.data-table th:hover {
-  background-color: #e6e6e6;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.infinite-scroll {
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  padding: 10px;
-}
-
-.drag-drop-list {
-  min-height: 200px;
-  border: 2px dashed #ddd;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.drag-item {
-  padding: 10px;
-  margin: 5px 0;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  cursor: move;
-}
-
-.drag-item.dragging {
-  opacity: 0.5;
-  transform: rotate(5deg);
-}
-
-.drop-zone {
-  background: #e3f2fd;
-  border-color: #2196f3;
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-}
-
-.error {
-  color: #dc3545;
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 10px 0;
-}`,
-        },
-        // Hidden files - these won't show in tabs but are needed for the app to work
-        '/index.tsx': {
-          code: `import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-
-const container = document.getElementById('root');
-const root = createRoot(container!);
-root.render(<App />);`,
-          hidden: true,
-        },
-        '/index.html': {
-          code: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${challenge.title}</title>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-</html>`,
-          hidden: true,
-        },
-      },
-      'vanilla-ts': {
-        '/index.ts': {
-          code: challenge.starterCode,
-        },
-        '/index.html': {
-          code: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${challenge.title}</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin: 0;
-      padding: 20px;
-      background-color: #f5f5f5;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>${challenge.title}</h1>
-    <div id="app"></div>
-  </div>
-  <script src="/index.ts"></script>
-</body>
-</html>`,
-        },
-      },
-      'vanilla': {
-        '/index.js': {
-          code: challenge.starterCode,
-        },
-        '/index.html': {
-          code: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${challenge.title}</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin: 0;
-      padding: 20px;
-      background-color: #f5f5f5;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>${challenge.title}</h1>
-    <div id="app"></div>
-  </div>
-  <script src="/index.js"></script>
-</body>
-</html>`,
-        },
-      },
-      'vue-ts': {
-        '/src/App.vue': {
-          code: `<template>
-  <div id="app">
-    ${challenge.starterCode}
-  </div>
-</template>
-
-<script setup lang="ts">
-// Your Vue component logic here
-</script>
-
-<style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-</style>`,
-        },
-      },
-      'angular': {
-        '/src/app/app.component.ts': {
-          code: `import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  template: \`
-    <div class="container">
-      <h1>${challenge.title}</h1>
-      ${challenge.starterCode}
-    </div>
-  \`,
-  styles: [\`
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-  \`]
-})
-export class AppComponent {
-  title = '${challenge.title}';
-}`,
-        },
-      },
-    };
-
-    return baseFiles[template] || baseFiles['react-ts'];
+    // Use snippet files from the registry
+    return createSandpackFiles(challenge, false);
   };
 
   const template = challenge.sandpackTemplate || getTemplate(challenge.techStack);
-  const files = createSandpackFiles(challenge);
+  const files = createSandpackFilesForChallenge(challenge);
 
   return (
     <div className="w-2/3 border-r border-border bg-card">
