@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+export const appStarterCode = `import React, { useState, useMemo } from 'react';
 
 interface Column<T> {
   key: keyof T;
@@ -94,7 +94,7 @@ const DataTable = <T,>({
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className={`px-4 py-2 text-left border-b ${column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''}`}
+                  className={\`px-4 py-2 text-left border-b \${column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''}\`}
                   onClick={() => column.sortable && handleSort(column.key)}
                 >
                   <div className="flex items-center gap-1">
@@ -186,4 +186,79 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default App;`;
+
+export const cssStarterCode = `body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.data-table th:hover {
+  background-color: #e6e6e6;
+}`;

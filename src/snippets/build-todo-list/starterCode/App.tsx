@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+export const appStarterCode = `import React, { useState, useEffect } from 'react';
 
 interface Todo {
   id: string;
@@ -92,19 +92,19 @@ const TodoApp: React.FC = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setFilter('all')}
-            className={`px-3 py-1 rounded-md text-sm ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
           >
             All ({todos.length})
           </button>
           <button
             onClick={() => setFilter('active')}
-            className={`px-3 py-1 rounded-md text-sm ${filter === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
           >
             Active ({activeCount})
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`px-3 py-1 rounded-md text-sm ${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            className={\`px-3 py-1 rounded-md text-sm \${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
           >
             Completed ({completedCount})
           </button>
@@ -119,14 +119,14 @@ const TodoApp: React.FC = () => {
             </p>
           ) : (
             filteredTodos.map(todo => (
-              <div key={todo.id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+              <div key={todo.id} className={\`todo-item \${todo.completed ? 'completed' : ''}\`}>
                 <input
                   type="checkbox"
                   checked={todo.completed}
                   onChange={() => toggleTodo(todo.id)}
                   className="mr-3"
                 />
-                <span className={`flex-1 ${todo.completed ? 'line-through text-gray-500' : ''}`}>
+                <span className={\`flex-1 \${todo.completed ? 'line-through text-gray-500' : ''}\`}>
                   {todo.text}
                 </span>
                 <button
@@ -144,4 +144,69 @@ const TodoApp: React.FC = () => {
   );
 };
 
-export default TodoApp;
+export default TodoApp;`;
+
+export const cssStarterCode = `body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.todo-item.completed {
+  text-decoration: line-through;
+  color: #666;
+}`;

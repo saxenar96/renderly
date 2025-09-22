@@ -1,4 +1,10 @@
 import { SandpackFiles } from '@codesandbox/sandpack-react';
+import { appStarterCode as createReusableButtonAppStarterCode, cssStarterCode as createReusableButtonCssStarterCode } from '../snippets/create-reusable-button/starterCode/App';
+import { appStarterCode as buildTodoListAppStarterCode, cssStarterCode as buildTodoListCssStarterCode } from '../snippets/build-todo-list/starterCode/App';
+import { appStarterCode as buildModalComponentAppStarterCode, cssStarterCode as buildModalComponentCssStarterCode } from '../snippets/build-modal-component/starterCode/App';
+import { appStarterCode as createDataTableAppStarterCode, cssStarterCode as createDataTableCssStarterCode } from '../snippets/create-data-table/starterCode/App';
+import { appStarterCode as createDragDropInterfaceAppStarterCode, cssStarterCode as createDragDropInterfaceCssStarterCode } from '../snippets/create-drag-drop-interface/starterCode/App';
+import { appStarterCode as implementInfiniteScrollAppStarterCode, cssStarterCode as implementInfiniteScrollCssStarterCode } from '../snippets/implement-infinite-scroll/starterCode/App';
 
 export interface Challenge {
   id: string;
@@ -37,155 +43,8 @@ export const challengeRegistry: Record<string, Challenge> = {
       'Include hover and focus states'
     ],
     starterCode: {
-      'App.tsx': `import React from 'react';
-
-interface ButtonProps {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
-  className?: string;
-}
-
-const Button: React.FC<ButtonProps> = ({
-  children,
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  onClick,
-  className = ''
-}) => {
-  // Your implementation here
-  const baseClasses = 'font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
-  const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-blue-500'
-  };
-  
-  const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg'
-  };
-  
-  const disabledClasses = disabled 
-    ? 'opacity-50 cursor-not-allowed' 
-    : 'cursor-pointer';
-  
-  const classes = \`\${baseClasses} \${variantClasses[variant]} \${sizeClasses[size]} \${disabledClasses} \${className}\`;
-  
-  const handleClick = () => {
-    if (!disabled && onClick) {
-      onClick();
-    }
-  };
-  
-  return (
-    <button
-      className={classes}
-      disabled={disabled}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
-  );
-};
-
-const App: React.FC = () => {
-  const handleButtonClick = () => {
-    alert('Button clicked!');
-  };
-
-  return (
-    <div className="container">
-      <h1>Button Component Demo</h1>
-      
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Primary Buttons</h2>
-          <div className="space-x-2">
-            <Button onClick={handleButtonClick}>Click me</Button>
-            <Button variant="primary" size="sm">Small</Button>
-            <Button variant="primary" size="lg">Large</Button>
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Secondary Buttons</h2>
-          <div className="space-x-2">
-            <Button variant="secondary" onClick={handleButtonClick}>Secondary</Button>
-            <Button variant="secondary" size="sm">Small Secondary</Button>
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Outline Buttons</h2>
-          <div className="space-x-2">
-            <Button variant="outline" onClick={handleButtonClick}>Outline</Button>
-            <Button variant="outline" size="sm">Small Outline</Button>
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Disabled Buttons</h2>
-          <div className="space-x-2">
-            <Button disabled>Disabled Primary</Button>
-            <Button variant="secondary" disabled>Disabled Secondary</Button>
-            <Button variant="outline" disabled>Disabled Outline</Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;`,
-      'App.css': `body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}`
+      'App.tsx': createReusableButtonAppStarterCode,
+      'App.css': createReusableButtonCssStarterCode
     }
   },
   'build-todo-list': {
@@ -205,220 +64,98 @@ button:disabled {
       'Add proper TypeScript types'
     ],
     starterCode: {
-      'App.tsx': `import React, { useState, useEffect } from 'react';
-
-interface Todo {
-  id: string;
-  text: string;
-  completed: boolean;
-  createdAt: Date;
-}
-
-const TodoApp: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
-  const [newTodo, setNewTodo] = useState('');
-  
-  // Load todos from localStorage on component mount
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      try {
-        const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
-          ...todo,
-          createdAt: new Date(todo.createdAt)
-        }));
-        setTodos(parsedTodos);
-      } catch (error) {
-        console.error('Error loading todos:', error);
-      }
+      'App.tsx': buildTodoListAppStarterCode,
+      'App.css': buildTodoListCssStarterCode
     }
-  }, []);
-  
-  // Save todos to localStorage whenever todos change
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
-  
-  const addTodo = () => {
-    if (newTodo.trim()) {
-      const todo: Todo = {
-        id: Date.now().toString(),
-        text: newTodo.trim(),
-        completed: false,
-        createdAt: new Date()
-      };
-      setTodos([...todos, todo]);
-      setNewTodo('');
+  },
+  'build-modal-component': {
+    id: 'build-modal-component',
+    title: 'Build a Modal Component',
+    difficulty: 'Medium',
+    techStack: 'React',
+    description: 'Create a reusable Modal component with proper accessibility features, backdrop handling, and different sizes.',
+    tags: ['components', 'accessibility', 'portal', 'typescript'],
+    isNew: false,
+    requirements: [
+      'Create a Modal component with TypeScript',
+      'Support different sizes (sm, md, lg, xl)',
+      'Handle backdrop clicks to close modal',
+      'Implement proper focus management',
+      'Add keyboard navigation (Escape key)',
+      'Include proper ARIA attributes',
+      'Support custom content and title'
+    ],
+    starterCode: {
+      'App.tsx': buildModalComponentAppStarterCode,
+      'App.css': buildModalComponentCssStarterCode
     }
-  };
-  
-  const toggleTodo = (id: string) => {
-    setTodos(todos.map(todo => 
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
-  };
-  
-  const deleteTodo = (id: string) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
-  
-  const filteredTodos = todos.filter(todo => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
-    return true;
-  });
-  
-  const completedCount = todos.filter(todo => todo.completed).length;
-  const activeCount = todos.length - completedCount;
-  
-  return (
-    <div className="container">
-      <h1>Todo List App</h1>
-      
-      <div className="space-y-4">
-        {/* Add Todo Form */}
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={newTodo}
-            onChange={(e) => setNewTodo(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-            placeholder="Add a new todo..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            onClick={addTodo}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Add
-          </button>
-        </div>
-        
-        {/* Filter Buttons */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => setFilter('all')}
-            className={\`px-3 py-1 rounded-md text-sm \${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
-          >
-            All ({todos.length})
-          </button>
-          <button
-            onClick={() => setFilter('active')}
-            className={\`px-3 py-1 rounded-md text-sm \${filter === 'active' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
-          >
-            Active ({activeCount})
-          </button>
-          <button
-            onClick={() => setFilter('completed')}
-            className={\`px-3 py-1 rounded-md text-sm \${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}\`}
-          >
-            Completed ({completedCount})
-          </button>
-        </div>
-        
-        {/* Todo List */}
-        <div className="space-y-2">
-          {filteredTodos.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
-              {filter === 'all' ? 'No todos yet. Add one above!' : 
-               filter === 'active' ? 'No active todos!' : 'No completed todos!'}
-            </p>
-          ) : (
-            filteredTodos.map(todo => (
-              <div key={todo.id} className={\`todo-item \${todo.completed ? 'completed' : ''}\`}>
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => toggleTodo(todo.id)}
-                  className="mr-3"
-                />
-                <span className={\`flex-1 \${todo.completed ? 'line-through text-gray-500' : ''}\`}>
-                  {todo.text}
-                </span>
-                <button
-                  onClick={() => deleteTodo(todo.id)}
-                  className="text-red-600 hover:text-red-800 text-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default TodoApp;`,
-      'App.css': `body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.todo-item.completed {
-  text-decoration: line-through;
-  color: #666;
-}`
+  },
+  'create-data-table': {
+    id: 'create-data-table',
+    title: 'Create a Data Table Component',
+    difficulty: 'Hard',
+    techStack: 'React',
+    description: 'Build a comprehensive data table with sorting, pagination, search, and customizable columns.',
+    tags: ['components', 'data', 'pagination', 'sorting', 'typescript'],
+    isNew: false,
+    requirements: [
+      'Create a generic DataTable component with TypeScript',
+      'Implement column-based sorting (asc/desc)',
+      'Add search functionality across all columns',
+      'Implement pagination with configurable page size',
+      'Support custom column rendering',
+      'Make it fully responsive',
+      'Add loading and empty states'
+    ],
+    starterCode: {
+      'App.tsx': createDataTableAppStarterCode,
+      'App.css': createDataTableCssStarterCode
+    }
+  },
+  'create-drag-drop-interface': {
+    id: 'create-drag-drop-interface',
+    title: 'Create a Drag & Drop Interface',
+    difficulty: 'Hard',
+    techStack: 'React',
+    description: 'Build a drag and drop interface with visual feedback and reordering capabilities.',
+    tags: ['components', 'drag-drop', 'interactions', 'typescript'],
+    isNew: false,
+    requirements: [
+      'Create a DragDropList component with TypeScript',
+      'Implement drag and drop functionality',
+      'Add visual feedback during dragging',
+      'Support item reordering',
+      'Handle drop zones and validation',
+      'Add smooth animations and transitions',
+      'Ensure accessibility compliance'
+    ],
+    starterCode: {
+      'App.tsx': createDragDropInterfaceAppStarterCode,
+      'App.css': createDragDropInterfaceCssStarterCode
+    }
+  },
+  'implement-infinite-scroll': {
+    id: 'implement-infinite-scroll',
+    title: 'Implement Infinite Scroll',
+    difficulty: 'Medium',
+    techStack: 'React',
+    description: 'Create an infinite scroll component that loads more data as the user scrolls down.',
+    tags: ['components', 'performance', 'scroll', 'hooks', 'typescript'],
+    isNew: false,
+    requirements: [
+      'Create an InfiniteScroll component with TypeScript',
+      'Implement intersection observer for scroll detection',
+      'Handle loading states and error handling',
+      'Support custom loading components',
+      'Optimize performance with proper cleanup',
+      'Add proper TypeScript generics for data types',
+      'Include proper error boundaries'
+    ],
+    starterCode: {
+      'App.tsx': implementInfiniteScrollAppStarterCode,
+      'App.css': implementInfiniteScrollCssStarterCode
     }
   }
-  // Add other challenges here...
 };
 
 export function getChallenge(id: string): Challenge | undefined {
