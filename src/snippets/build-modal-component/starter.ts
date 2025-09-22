@@ -1,4 +1,41 @@
-body {
+export const appSolutionCode = `import React, { useEffect, useRef } from 'react';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  size = 'md'
+}) => {
+  // TODO: Implement Modal component
+  // 1. Handle backdrop clicks to close modal
+  // 2. Implement keyboard navigation (Escape key)
+  // 3. Add proper focus management
+  // 4. Include proper ARIA attributes
+  // 5. Support different sizes (sm, md, lg, xl)
+  
+  if (!isOpen) return null;
+  
+  return (
+    <>
+      {/* TODO: Add modal overlay with backdrop */}
+      {/* TODO: Add modal content with proper sizing */}
+      {/* TODO: Add close button */}
+      {/* TODO: Add title if provided */}
+      {/* TODO: Render children */}
+    </>
+  );
+};`;
+
+export const cssSolutionCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -63,4 +100,4 @@ button:disabled {
   width: 90%;
   max-height: 80vh;
   overflow-y: auto;
-}
+}`;

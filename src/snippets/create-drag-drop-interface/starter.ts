@@ -1,4 +1,42 @@
-body {
+export const appSolutionCode = `import React, { useState, useRef } from 'react';
+
+interface DragDropItem {
+  id: string;
+  content: React.ReactNode;
+}
+
+interface DragDropListProps {
+  items: DragDropItem[];
+  onReorder: (items: DragDropItem[]) => void;
+  renderItem: (item: DragDropItem, isDragging: boolean) => React.ReactNode;
+}
+
+export const DragDropList: React.FC<DragDropListProps> = ({
+  items,
+  onReorder,
+  renderItem
+}) => {
+  // TODO: Implement drag and drop functionality
+  // 1. Handle drag start events
+  // 2. Handle drag over events
+  // 3. Handle drop events
+  // 4. Implement visual feedback during dragging
+  // 5. Handle item reordering
+  // 6. Add smooth animations and transitions
+  // 7. Ensure accessibility compliance
+  
+  return (
+    <div className="drag-drop-list">
+      {items.map((item) => (
+        <div key={item.id} className="drag-item">
+          {renderItem(item, false)}
+        </div>
+      ))}
+    </div>
+  );
+};`;
+
+export const cssSolutionCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -66,4 +104,4 @@ button:disabled {
 .drop-zone {
   background: #e3f2fd;
   border-color: #2196f3;
-}
+}`;

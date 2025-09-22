@@ -1,4 +1,4 @@
-export const appStarterCode = `import React, { useState, useEffect } from 'react';
+export const appSolutionCode = `import React, { useState, useEffect } from 'react';
 
 interface Todo {
   id: string;
@@ -12,55 +12,33 @@ const TodoApp: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
   const [newTodo, setNewTodo] = useState('');
   
-  // Load todos from localStorage on component mount
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      try {
-        const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
-          ...todo,
-          createdAt: new Date(todo.createdAt)
-        }));
-        setTodos(parsedTodos);
-      } catch (error) {
-        console.error('Error loading todos:', error);
-      }
-    }
-  }, []);
-  
-  // Save todos to localStorage whenever todos change
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+  // TODO: Implement localStorage persistence
+  // 1. Load todos from localStorage on component mount
+  // 2. Save todos to localStorage whenever todos change
   
   const addTodo = () => {
-    if (newTodo.trim()) {
-      const todo: Todo = {
-        id: Date.now().toString(),
-        text: newTodo.trim(),
-        completed: false,
-        createdAt: new Date()
-      };
-      setTodos([...todos, todo]);
-      setNewTodo('');
-    }
+    // TODO: Implement add todo functionality
+    // 1. Check if newTodo has content
+    // 2. Create new todo object with id, text, completed, createdAt
+    // 3. Add to todos array
+    // 4. Clear input field
   };
   
   const toggleTodo = (id: string) => {
-    setTodos(todos.map(todo => 
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+    // TODO: Implement toggle todo completion
+    // 1. Find todo by id
+    // 2. Toggle completed status
+    // 3. Update todos array
   };
   
   const deleteTodo = (id: string) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    // TODO: Implement delete todo functionality
+    // 1. Filter out todo with matching id
+    // 2. Update todos array
   };
   
-  const filteredTodos = todos.filter(todo => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
-    return true;
-  });
+  // TODO: Implement filtering logic
+  const filteredTodos = todos; // Replace with actual filtering logic
   
   const completedCount = todos.filter(todo => todo.completed).length;
   const activeCount = todos.length - completedCount;
@@ -146,7 +124,7 @@ const TodoApp: React.FC = () => {
 
 export default TodoApp;`;
 
-export const cssStarterCode = `body {
+export const cssSolutionCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

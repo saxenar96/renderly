@@ -1,4 +1,4 @@
-export const appStarterCode = `import React, { useState, useMemo } from 'react';
+export const appSolutionCode = `import React, { useState, useMemo } from 'react';
 
 interface Column<T> {
   key: keyof T;
@@ -24,53 +24,21 @@ const DataTable = <T,>({
   const [sortConfig, setSortConfig] = useState<{ key: keyof T; direction: 'asc' | 'desc' } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   
-  // Filter data based on search term
-  const filteredData = useMemo(() => {
-    if (!searchTerm) return data;
-    
-    return data.filter(item =>
-      columns.some(column => {
-        const value = item[column.key];
-        return value && value.toString().toLowerCase().includes(searchTerm.toLowerCase());
-      })
-    );
-  }, [data, searchTerm, columns]);
+  // TODO: Implement filtering logic
+  const filteredData = data; // Replace with actual filtering logic
   
-  // Sort data
-  const sortedData = useMemo(() => {
-    if (!sortConfig) return filteredData;
-    
-    return [...filteredData].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
-      
-      if (aValue < bValue) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-  }, [filteredData, sortConfig]);
+  // TODO: Implement sorting logic
+  const sortedData = filteredData; // Replace with actual sorting logic
   
-  // Paginate data
-  const paginatedData = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-    return sortedData.slice(startIndex, startIndex + pageSize);
-  }, [sortedData, currentPage, pageSize]);
+  // TODO: Implement pagination logic
+  const paginatedData = sortedData; // Replace with actual pagination logic
   
   const totalPages = Math.ceil(sortedData.length / pageSize);
   
   const handleSort = (key: keyof T) => {
-    setSortConfig(prev => {
-      if (prev?.key === key) {
-        return prev.direction === 'asc' 
-          ? { key, direction: 'desc' }
-          : null;
-      }
-      return { key, direction: 'asc' };
-    });
+    // TODO: Implement sort handling
+    // 1. Toggle between asc, desc, and no sort
+    // 2. Update sortConfig state
   };
   
   return (
@@ -188,7 +156,7 @@ const App: React.FC = () => {
 
 export default App;`;
 
-export const cssStarterCode = `body {
+export const cssSolutionCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

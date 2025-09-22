@@ -1,4 +1,4 @@
-export const appStarterCode = `import React, { useState, useEffect, useCallback } from 'react';
+export const appSolutionCode = `import React, { useState, useEffect, useCallback } from 'react';
 
 interface InfiniteScrollProps<T> {
   data: T[];
@@ -15,16 +15,32 @@ export const InfiniteScroll = <T,>({
   renderItem,
   loadingComponent
 }: InfiniteScrollProps<T>) => {
-  // Your implementation here
+  // TODO: Implement infinite scroll functionality
+  // 1. Use intersection observer to detect when user scrolls near bottom
+  // 2. Handle loading states and error handling
+  // 3. Support custom loading components
+  // 4. Optimize performance with proper cleanup
+  // 5. Add proper TypeScript generics for data types
+  // 6. Include proper error boundaries
   
   return (
     <div className="infinite-scroll">
-      {/* Your JSX here */}
+      {data.map((item, index) => (
+        <div key={index}>
+          {renderItem(item, index)}
+        </div>
+      ))}
+      
+      {hasMore && (
+        <div className="loading">
+          {loadingComponent || 'Loading...'}
+        </div>
+      )}
     </div>
   );
 };`;
 
-export const cssStarterCode = `body {
+export const cssSolutionCode = `body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
