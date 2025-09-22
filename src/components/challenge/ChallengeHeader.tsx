@@ -4,18 +4,7 @@ import React from 'react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { ModeToggle } from '../mode-toggle';
-
-export interface Challenge {
-  id: string;
-  title: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  techStack: string;
-  description: string;
-  tags: string[];
-  isNew?: boolean;
-  requirements: string[];
-  starterCode: string;
-}
+import { Challenge } from '../../types/challenge';
 
 interface ChallengeHeaderProps {
   challenge: Challenge;

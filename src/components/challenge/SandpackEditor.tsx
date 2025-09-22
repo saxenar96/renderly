@@ -5,27 +5,7 @@ import { Sandpack } from '@codesandbox/sandpack-react';
 import { SandpackFiles, SandpackPredefinedTemplate } from '@codesandbox/sandpack-react';
 import { useTheme } from 'next-themes';
 import { createSandpackFiles } from '../../lib/challengeRegistry';
-
-export interface Challenge {
-  id: string;
-  title: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  techStack: string;
-  description: string;
-  tags: string[];
-  isNew?: boolean;
-  requirements: string[];
-  starterCode: {
-    'App.tsx': string;
-    'App.css': string;
-  };
-  solutionCode?: {
-    'App.tsx': string;
-    'App.css': string;
-  };
-  sandpackTemplate?: SandpackPredefinedTemplate;
-  sandpackFiles?: SandpackFiles;
-}
+import { Challenge } from '../../types/challenge';
 
 interface SandpackEditorProps {
   challenge: Challenge;
