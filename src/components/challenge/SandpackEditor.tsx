@@ -25,8 +25,8 @@ export function SandpackEditor({ challenge }: SandpackEditorProps) {
     return (
       <div className="w-2/3 border-r border-border bg-card">
         <div className="h-full flex flex-col">
-          <div className="border-b border-border px-6 py-4">
-            <h2 className="text-lg font-semibold text-card-foreground">Code Editor & Preview</h2>
+          <div className="px-6 py-4">
+            <h2 className="text-2xl font-semibold text-card-foreground">Code Editor & Preview</h2>
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div className="text-muted-foreground">Loading editor...</div>
@@ -70,11 +70,7 @@ export function SandpackEditor({ challenge }: SandpackEditorProps) {
 
   return (
     <div className="w-2/3 border-r border-border bg-card">
-      <div className="h-full flex flex-col">
-        <div className="border-b border-border px-6 py-4">
-          <h2 className="text-lg font-semibold text-card-foreground">Code Editor & Preview</h2>
-        </div>
-        
+      <div className="h-full flex flex-col">        
         <div className="flex-1 overflow-hidden">
           <div className="h-full sandpack-container">
             <Sandpack
